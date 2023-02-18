@@ -1,8 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
+require("dotenv").config({ path: "./.env" });
 const morgan = require("morgan");
 const expressAsyncHandler = require("express-async-handler");
+const authRouter = require("./routes/auth.route");
+const productRouter = require("./routes/product.route");
 require("./database/database.connection")
 
 const app = express();
@@ -18,5 +20,8 @@ app.get("/api/v1", expressAsyncHandler(async (req, res) => {
         res.status(500).json({ code: 2, message: err.message || "Server not responding." })
     }
 }))
+
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/product", productRouter);
 
 module.exports = app;
