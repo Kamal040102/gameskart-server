@@ -65,6 +65,14 @@ const signupController = expressAsyncHandler(async (req, res) => {
     }
 })
 
+const checkAuthToken = expressAsyncHandler(async (req, res) => {
+    try {
+        successResponseData(res, 200, req.user);
+    } catch (err) {
+        failureResponseMessage(res, 500, err.message);
+    }
+})
+
 module.exports = {
-    signinController, signupController
+    signinController, signupController, checkAuthToken
 }
